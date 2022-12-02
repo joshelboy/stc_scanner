@@ -1,0 +1,14 @@
+{
+  "name": "stc_scanner",
+  "version": "1.0.0",
+  "description": "STC-Demo scanner for iOS devices with 2 cams",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Elias Tilegant",
+  "license": "ISC",
+  "dependencies": {
+    "html5-qrcode": "^2.3.4"
+  }
+}
