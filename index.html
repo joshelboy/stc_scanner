@@ -114,7 +114,8 @@
             document.getElementById("scanButton").setAttribute("class", "bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline");
 
 
-            document.getElementById("sizeSlider").disabled = false;
+            document.getElementById("heightSlider").disabled = false;
+            document.getElementById("widthSlider").disabled = false;
         }
 
         function startScan() {
@@ -125,7 +126,8 @@
             document.getElementById("scanButton").setAttribute("onclick", "stopScan()");
             document.getElementById("scanButton").setAttribute("class", "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline");
 
-            document.getElementById("sizeSlider").disabled = true;
+            document.getElementById("heightSlider").disabled = true;
+            document.getElementById("widthSlider").disabled = true;
 
             console.log(config)
         }
