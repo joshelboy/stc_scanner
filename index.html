@@ -33,9 +33,16 @@
 
                 <!-- Slider that adjusts scanner size -->
                 <div class="flex items-center justify-between">
-                    <p class="text-gray-700 text-sm font-bold mb-2">Scannergröße</p>
-                    <input id="sizeSlider" type="range" min="50" max="350" value="250" class="slider" oninput="updateSize(this.value)">
-                    <p class="text-gray-700 text-sm font-bold mb-2" id="sizeValue">250</p>
+                    <p class="text-gray-700 text-sm font-bold mb-2">Höhe</p>
+                    <input id="heightSlider" type="range" min="50" max="350" value="250" class="slider" oninput="updateSize(this.value, 'h')">
+                    <p class="text-gray-700 text-sm font-bold mb-2" id="heightValue">250</p>
+                </div>
+
+                <!-- Slider that adjusts scanner size -->
+                <div class="flex items-center justify-between">
+                    <p class="text-gray-700 text-sm font-bold mb-2">Breite</p>
+                    <input id="widthSlider" type="range" min="50" max="350" value="250" class="slider" oninput="updateSize(this.value, 'w')">
+                    <p class="text-gray-700 text-sm font-bold mb-2" id="widthValue">250</p>
                 </div>
 
                 <br>
@@ -72,9 +79,16 @@
             console.warn(`Code scan error = ${error}`);
         }
 
-        function updateSize(value) {
-            config.qrbox = parseInt(value);
-            document.getElementById("sizeValue").innerHTML = value;
+        function updateSize(value, id) {
+
+            if (id == 'h') {
+                config.qrbox.height = parseInt(value);
+                document.getElementById("heightValue").innerHTML = value;
+            }
+            else if (id == 'w') {
+                config.qrbox.width = parseInt(value);
+                document.getElementById("widthValue").innerHTML = value;
+            }
             console.log("Scannergröße: " + config.qrbox);
         }
 
@@ -82,7 +96,10 @@
 
         let config = {
             fps: 30,
-            qrbox: scanner_size
+            qrbox: {
+                width: scanner_size,
+                height: scanner_size
+            }
         };
 
         function stopScan() {
