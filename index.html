@@ -23,11 +23,26 @@
                     <a class="inline-block align-baseline font-bold text-sm text-orange-500 hover:text-orange-800" href="https://github.com/mebjas/html5-qrcode#supported-code-formats">
                         Unterstütze Codes
                     </a>
-                    <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="startScan()">
+                    <button class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="startScan()" id="scanButton">
                         Scan
                     </button>
                 </div>
+                <br>
+                <hr>
+                <br>
+
+                <!-- Slider that adjusts scanner size -->
+                <div class="flex items-center justify-between">
+                    <p class="text-gray-700 text-sm font-bold mb-2">Scannergröße</p>
+                    <input id="sizeSlider" type="range" min="50" max="350" value="250" class="slider" oninput="updateSize(this.value)">
+                    <p class="text-gray-700 text-sm font-bold mb-2" id="sizeValue">250</p>
+                </div>
+
+                <br>
+                <hr>
+                <br>
                     <p class="text-gray-500 text-xs">Zum Testen der Scanfunktion einfach auf "Scan" drücken.</p>
+                    <p class="text-gray-500 text-xs">Die größe kann nur bei gestopptem Video verändert werden!</p>
             </form>
             <div id="reader" width="300px"></div>
             <p class="text-center text-gray-500 text-xs">
@@ -40,17 +55,15 @@
     </div>
 
     <script>
+        let scanner_size = 250;
+
         function onScanSuccess(decodedText, decodedResult) {
             // handle the scanned code as you like, for example:
             console.log(`Code matched = ${decodedText}`, decodedResult);
 
             document.getElementById("numberField").value = decodedText;
 
-            html5QrCode.stop().then((ignore) => {
-                // QR Code scanning is stopped.
-            }).catch((err) => {
-                // Stop failed, handle it.
-            });
+            stopScan();
         }
 
         function onScanFailure(error) {
@@ -59,15 +72,45 @@
             console.warn(`Code scan error = ${error}`);
         }
 
+        function updateSize(value) {
+            config.qrbox = parseInt(value);
+            document.getElementById("sizeValue").innerHTML = value;
+            console.log("Scannergröße: " + config.qrbox);
+        }
+
         const html5QrCode = new Html5Qrcode("reader");
 
-        const config = {
+        let config = {
             fps: 30,
-            qrbox: 350
+            qrbox: scanner_size
         };
+
+        function stopScan() {
+            html5QrCode.stop().then((ignore) => {
+                // QR Code scanning is stopped.
+            }).catch((err) => {
+                // Stop failed, handle it.
+            });
+
+            document.getElementById("scanButton").innerHTML = "Scan";
+            document.getElementById("scanButton").setAttribute("onclick", "startScan()");
+            document.getElementById("scanButton").setAttribute("class", "bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline");
+
+
+            document.getElementById("sizeSlider").disabled = false;
+        }
 
         function startScan() {
             html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure);
+            // change scan button to stop button
+            // change color of scan button to red
+            document.getElementById("scanButton").innerHTML = "Stop";
+            document.getElementById("scanButton").setAttribute("onclick", "stopScan()");
+            document.getElementById("scanButton").setAttribute("class", "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline");
+
+            document.getElementById("sizeSlider").disabled = true;
+
+            console.log(config)
         }
         /*
         // If you want to prefer back camera
