@@ -95,11 +95,15 @@
         const html5QrCode = new Html5Qrcode("reader");
 
         let config = {
-            fps: 30,
+            fps: 10,
             qrbox: {
                 width: scanner_size,
                 height: scanner_size
-            }
+            },
+            experimentalFeatures: {
+                useBarCodeDetectorIfSupported: true
+            },
+            rememberLastUsedCamera: true
         };
 
         function stopScan() {
