@@ -9,6 +9,6 @@
   "author": "Elias Tilegant",
   "license": "ISC",
   "dependencies": {
-    "html5-qrcode": "^2.3.4"
+    "html5-qrcode": "^2.3.8"
   }
 }
