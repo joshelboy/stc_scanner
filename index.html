@@ -95,7 +95,12 @@
         const html5QrCode = new Html5Qrcode("reader");
 
         let config = {
-            fps: 10,
+            fps: 30,
+            videoConstraints: {
+                 width: 1920,
+                 height: 1080,
+                 facingMode: "environment",
+              },
             qrbox: {
                 width: scanner_size,
                 height: scanner_size
@@ -103,7 +108,8 @@
             experimentalFeatures: {
                 useBarCodeDetectorIfSupported: true
             },
-            rememberLastUsedCamera: true
+            rememberLastUsedCamera: true,
+            aspectRatio: 1, showTorchButtonIfSupported: true, rememberLastUsedCamera: true, useBarCodeDetectorIfSupported: true
         };
 
         function stopScan() {
@@ -124,6 +130,14 @@
 
         function startScan() {
             html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure);
+
+            setTimeout(function () {
+                    console.log("Applying video constraints...");
+                    html5QrCode.applyVideoConstraints({
+                      focusMode: "continuous",
+                      advanced: [{ zoom: 2.0 }],
+                    });
+                  }, 2000);
             // change scan button to stop button
             // change color of scan button to red
             document.getElementById("scanButton").innerHTML = "Stop";
