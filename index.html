@@ -53,7 +53,7 @@
             </form>
             <div id="reader" width="300px"></div>
             <p class="text-center text-gray-500 text-xs">
-                2022 status C AG | Elias Tilegant
+                2024 status C AG | Elias Tilegant
             </p>
             <div class="text-center text-gray-500 text-xs" href="https://github.com/joshelboy/stc_scanner">
                 <a href="https://github.com/joshelboy/stc_scanner">Github-Repository</a>
@@ -95,7 +95,7 @@
         const html5QrCode = new Html5Qrcode("reader");
 
         let config = {
-            fps: 30,
+            fps: 60,
             videoConstraints: {
                  width: 1920,
                  height: 1080,
@@ -109,7 +109,9 @@
                 useBarCodeDetectorIfSupported: true
             },
             rememberLastUsedCamera: true,
-            aspectRatio: 1, showTorchButtonIfSupported: true, rememberLastUsedCamera: true, useBarCodeDetectorIfSupported: true
+            aspectRatio: 1, showTorchButtonIfSupported: true, rememberLastUsedCamera: true, useBarCodeDetectorIfSupported: true,
+            advanced: [{ zoom: 2.0 }],
+            focusMode: "continuous"
         };
 
         function stopScan() {
